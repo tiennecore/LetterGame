@@ -1,11 +1,11 @@
-package fr.esiea.puig.gnondoli.Front;
+package fr.esiea.XIE.RAVI.Front;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import fr.esiea.puig.gnondoli.Joueurs.Player;
-import fr.esiea.puig.gnondoli.Plateau.GameEngine;
-import fr.esiea.puig.gnondoli.Plateau.LettresPlateau;
+import fr.esiea.XIE.RAVI.Joueurs.Player;
+import fr.esiea.XIE.RAVI.Plateau.GameEngine;
+import fr.esiea.XIE.RAVI.Plateau.LettresPlateau;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -63,6 +63,7 @@ public class Fenetre implements IFrame{
 		      public void actionPerformed(ActionEvent event){
 		    	  OrgaJeu.getEventAction().set(0,false);
 		    	  OrgaJeu.getEventAction().set(3,false);
+		    	  OrgaJeu.getSemaphore().release() ;
 
 		      }
 		    });
@@ -78,7 +79,7 @@ public class Fenetre implements IFrame{
 		JButton voler=new JButton("voler");
 		voler.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent event){				
-		        
+		    	  OrgaJeu.getEventAction().set(4,true);
 		      }
 		    });
 		
@@ -95,6 +96,12 @@ public class Fenetre implements IFrame{
 		    	  if(OrgaJeu.getEventAction().get(3)==true){
 		    		  OrgaJeu.nouveaumotused(motecrit.getText());
 		    		  OrgaJeu.getEventAction().set(3,false);
+		    	  }
+		    	  if(OrgaJeu.getEventAction().get(4)==true){
+		    		  OrgaJeu.modifiermot(motecrit.getText());
+				  }
+		    	  if(OrgaJeu.getEventAction().get(5)==true){
+		    		  
 		    	  }
 		        
 		      }

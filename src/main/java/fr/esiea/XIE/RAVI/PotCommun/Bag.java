@@ -1,8 +1,8 @@
-package fr.esiea.puig.gnondoli.PotCommun;
+package fr.esiea.XIE.RAVI.PotCommun;
 
 import java.util.Collections;
 
-import fr.esiea.puig.gnondoli.Plateau.LettresPlateau;
+import fr.esiea.XIE.RAVI.Plateau.LettresPlateau;
 
 public class Bag implements ILetterBag{
 

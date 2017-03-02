@@ -1,4 +1,4 @@
-package fr.esiea.puig.gnondoli.Plateau;
+package fr.esiea.XIE.RAVI.Plateau;
 
 import java.util.ArrayList;
 

@@ -1,14 +1,16 @@
-package fr.esiea.puig.gnondoli.Plateau;
+package fr.esiea.XIE.RAVI.Plateau;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
-import fr.esiea.puig.gnondoli.Joueurs.Player;
-import fr.esiea.puig.gnondoli.Words.Word;
-import fr.esiea.puig.gnondoli.Words.WordWrite;
+import fr.esiea.XIE.RAVI.Joueurs.Player;
+import fr.esiea.XIE.RAVI.Words.WordWrite;
+
+
 public class GameEngine {
 	final int NOMBRE_DE_MOTS_POUR_GAGNER = 10;
 	private List<Player> players;
@@ -16,10 +18,16 @@ public class GameEngine {
 	private LettresPlateau lettersplate;
 	private PlayerIterator<Player> tours;
 	private List<Boolean> eventAction;
+	private Semaphore semaphore ;
+	private String motsecrits ;
+	private WordWrite MotInitial;
 	
 	public GameEngine(List<Player> players,LettresPlateau plate) {
 		this.players = players;
 		this.lettersplate=plate;
+		this.motsecrits="";
+		this.MotInitial= new WordWrite(lettersplate.getCommunPot(),"");
+		this.setSemaphore(new Semaphore(0)) ;
 		this.setEventAction(new ArrayList<Boolean>(Arrays.asList(new Boolean[10])));
 		Collections.fill(getEventAction(), Boolean.FALSE);
 		this.setTours(new PlayerIterator<Player>(players));
@@ -30,15 +38,15 @@ public class GameEngine {
 	 * 1 -> pour le premier tour initier le player qui commence
 	 * 2 -> verification du d'éxistance du mot dans les liste de player
 	 * 3 -> actionner la création du nouveau mot
+	 * 4 -> action modifier un mot
+	 * 5 -> valider le mot a modifier
+	 * 6 -> 
 	 * 9 -> jeu fini
 	 * 
 	 * 
 	 * */
 	
 	public void run(){
-		players.forEach(theplayer -> {
-			System.out.println(theplayer.getMesMots().size());
-		});
 		while (!isGameFinish() ){
 			if(getEventAction().get(0)==false){
 				
@@ -57,7 +65,14 @@ public class GameEngine {
 	 		 		players.forEach( elem -> elem.Piocher());
 	 		 	}
 				printAll();
-	        }  	 
+	        }
+			else{
+				try {
+					getSemaphore().acquire() ;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 	    }
 	}
 	
@@ -116,11 +131,15 @@ public class GameEngine {
 			lettres+= lettersplate.getCommunPot().get(elem) +", ";
 		  }
 		System.out.println(lettres);
+		motsecrits="";
 		players.forEach(those ->{
 			System.out.println("liste de mot de : " + those.getName());
 			those.getMesMots().forEach(that -> {
-				System.out.println(that.getWordPlayer());
+				if( that.getWordPlayer()!= ""){
+					motsecrits+= that.getWordPlayer()+ ", ";
+				}
 			});
+			System.out.println(motsecrits);
 		});
 	}
 	
@@ -150,11 +169,11 @@ public class GameEngine {
 		getEventAction().set(2, false);
 		
 		players.forEach(player -> {
-			
 			player.getMesMots().forEach(word ->{
-				if(word.getWordPlayer() == wordused){
+				if(word.getWordPlayer() != wordused){					
+				}else{
+					System.out.println("passé");
 					getEventAction().set(2,true);
-					return;
 				}
 			});
 		});
@@ -166,14 +185,52 @@ public class GameEngine {
 	
 	public void nouveaumotused(String wordused) {
 		WordWrite word = new WordWrite(lettersplate.getCommunPot(),wordused);
-		if(word.NouveauWord()==true && verificationMotExisteDeja(word.getWordwrite())==false){
+		if( verificationMotExisteDeja(word.getWordwrite())==false && word.NouveauWord()==true){
 			getCurrentPlayer().getMesMots().get(getCurrentPlayer().ActualWord()).setWordPlayer(word.getWordwrite());;
 			lettersplate.setCommunPot(word.getListCache());
 			getCurrentPlayer().Piocher();
 			printAll();
 		}
 	}
-	
+	// en redaction
+	/*
+	public void modifiermot(String wordused){
+		if(getEventAction().get(5)==false){
+			 MotInitial.setWordwrite(wordused);
+			 MotInitial.ChangeWordToListChar();
+			getCurrentPlayer().getMesMots().forEach(mot -> {
+				if(mot.getWordPlayer()==wordused){
+					getEventAction().set(5, true);
+					return;
+				}
+			});
+		}
+		else{
+			WordWrite MotModifier = new WordWrite(lettersplate.getCommunPot(),wordused);
+			MotModifier.ChangeWordToListChar();
+			MotModifier.setMycharCache(MotModifier.getMychar());
+			int taille=0;
+			for(int i=0; i<MotModifier.getMychar().length;i++){
+				for(int j=0; j<MotModifier.getMychar().length;j++){
+					if(MotModifier.getMycharCache()[i] == MotInitial.getMychar()[j])
+					taille++;
+					
+					
+				}
+			}
+			if(taille==MotInitial.getMychar().length){
+				for (int i=0; i<MotModifier.getMychar().length;i++){
+					for (int j=0; j<MotInitial.getMychar().length;j++){
+						if(val.get(j))
+					}
+				}
+			}
+			else{
+				System.out.println("vous n'avez pas mis toutes les lettres dans le mot");
+			}
+			
+		}
+	}*/
 	
 
 	public Player getCurrentPlayer() {
@@ -198,6 +255,14 @@ public class GameEngine {
 
 	public void setEventAction(List<Boolean> eventAction) {
 		this.eventAction = eventAction;
+	}
+
+	public Semaphore getSemaphore() {
+		return semaphore;
+	}
+
+	public void setSemaphore(Semaphore semaphore) {
+		this.semaphore = semaphore;
 	}
 	
 	

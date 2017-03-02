@@ -1,8 +1,8 @@
-package fr.esiea.puig.gnondoli.App;
+package fr.esiea.XIE.RAVI.App;
 
 
 
-import fr.esiea.puig.gnondoli.Front.Fenetre;
+import fr.esiea.XIE.RAVI.Front.Fenetre;
 
 
 public class Application {

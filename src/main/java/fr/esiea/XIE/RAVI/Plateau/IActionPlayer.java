@@ -1,4 +1,4 @@
-package fr.esiea.puig.gnondoli.Plateau;
+package fr.esiea.XIE.RAVI.Plateau;
 
 
 public interface IActionPlayer {

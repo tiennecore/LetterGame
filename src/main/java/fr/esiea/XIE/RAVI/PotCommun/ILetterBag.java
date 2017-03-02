@@ -1,4 +1,4 @@
-package fr.esiea.puig.gnondoli.PotCommun;
+package fr.esiea.XIE.RAVI.PotCommun;
 
 
 public interface ILetterBag {

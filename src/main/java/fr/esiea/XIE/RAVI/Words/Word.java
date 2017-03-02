@@ -1,6 +1,7 @@
-package fr.esiea.puig.gnondoli.Words;
+package fr.esiea.XIE.RAVI.Words;
 
-import java.util.logging.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class Word implements IWord{
 	
@@ -37,7 +38,6 @@ public class Word implements IWord{
 
 
 	public void setWordPlayer(String wordPlayer) {
-		//Logger.info("mot modifier");
 		WordPlayer = wordPlayer;
 	}
 

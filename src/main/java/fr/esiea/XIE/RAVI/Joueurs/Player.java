@@ -1,19 +1,15 @@
-package fr.esiea.puig.gnondoli.Joueurs;
+package fr.esiea.XIE.RAVI.Joueurs;
 
-
-import fr.esiea.puig.gnondoli.Plateau.IActionPlayer;
-import fr.esiea.puig.gnondoli.Plateau.LettresPlateau;
-import fr.esiea.puig.gnondoli.PotCommun.Bag;
-import fr.esiea.puig.gnondoli.Words.IWord;
-import fr.esiea.puig.gnondoli.Words.Word;
-import fr.esiea.puig.gnondoli.Words.WordWrite;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import fr.esiea.XIE.RAVI.Plateau.IActionPlayer;
+import fr.esiea.XIE.RAVI.Plateau.LettresPlateau;
+import fr.esiea.XIE.RAVI.PotCommun.Bag;
+import fr.esiea.XIE.RAVI.Words.IWord;
+import fr.esiea.XIE.RAVI.Words.Word;
 
 
 public class Player implements IActionPlayer,IWord{
@@ -26,8 +22,8 @@ public class Player implements IActionPlayer,IWord{
 		this.LettresPlayer= new Bag(pot);
 		this.setMesMots(new ArrayList<Word>());
 		for (int i=0;i< 10;i++){
-			Word lala;
-			getMesMots().add(lala=new Word());
+			Word lala=new Word();
+			getMesMots().add(lala);
 		}
 		this.Name=Nom;
 	}
@@ -39,11 +35,6 @@ public class Player implements IActionPlayer,IWord{
 	
 	public void setName(String name) {
 		Name = name;
-	}
-	
-	//taille de la liste du player
-	public int getSizeMesMots() {
-		return getMesMots().size();
 	}
 	
 	//ajouter une lettre au potcommun
@@ -102,7 +93,7 @@ public class Player implements IActionPlayer,IWord{
 		Random r = new Random();
 		int val=r.nextInt(5) +0;
 		int typelettre=r.nextInt(100);
-		if(typelettre<55){
+		if(typelettre<45){
 			switch(val) {
 			   case 0 :
 			      val=1+r.nextInt(2) +0;break;
@@ -146,6 +137,5 @@ public class Player implements IActionPlayer,IWord{
 	public void setMesMots(List<Word> mesMots) {
 		MesMots = mesMots;
 	}
-		
 
 }
