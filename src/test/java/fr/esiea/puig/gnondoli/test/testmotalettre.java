@@ -14,8 +14,8 @@ public class testmotalettre {
 	@Test
 	public void testPassageChar(){
 		mottest.mottoliste();
-		assertTrue("le mot est en bien transformé en char",mottest.getCharactermot().get(mottest.getWord().length()-1)==(Character) mottest.getWord().charAt(mottest.getWord().length()-1));
-		assertFalse("le mot n'est transformé en char",mottest.getCharactermot().get(mottest.getWord().length()-1)!=(Character) mottest.getWord().charAt(mottest.getWord().length()-1));
+		assertTrue("le mot est en bien transforme en char",mottest.getCharactermot().get(mottest.getWord().length()-1)==(Character) mottest.getWord().charAt(mottest.getWord().length()-1));
+		assertFalse("le mot n'est transforme en char",mottest.getCharactermot().get(mottest.getWord().length()-1)!=(Character) mottest.getWord().charAt(mottest.getWord().length()-1));
 
 	}
 
